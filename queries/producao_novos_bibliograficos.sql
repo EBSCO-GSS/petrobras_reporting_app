@@ -7,7 +7,7 @@ CREATE FUNCTION producao_novos_bibliograficos(
 RETURNS TABLE(
     Usuario text,
     AnoMes text,
-    Total numeric)
+    Total text)
 AS $$
 select 
     (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
