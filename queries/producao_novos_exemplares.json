@@ -1,6 +1,6 @@
 {
-    "displayName": "Produção - Novos registos bibliográficos",
-    "description": "Mostra os totais de novos registros bibliograficos criados por operador",
+    "displayName": "Produção - Novos exemplares",
+    "description": "Mostra os totais de novos exemplares criados por operador",
     "instructions": "Introduzir as datas de início e fim ",
     "parameters": [
         {
