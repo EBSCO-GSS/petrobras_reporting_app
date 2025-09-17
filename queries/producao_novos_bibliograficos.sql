@@ -10,20 +10,20 @@ RETURNS TABLE(
     Total numeric)
 AS $$
 select 
-    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS patron,
+    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
     to_char(
 	    date_trunc('month', (i.jsonb->'metadata'->>'createdDate')::timestamp),
 	    'YYYY-MM'
-	) AS created_month,
-    COUNT(*) AS total
+	) AS AnoMes,
+    COUNT(*) AS Total
 FROM folio_inventory.instance__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'createdByUserId')::uuid
 GROUP BY
-    created_month,
-    patron
+    AnoMes,
+    Usuario
 where (i.jsonb->'metadata'->>'createdDate')::timestamp between start_date and end_date
-ORDER BY created_month DESC, patron
+ORDER BY AnoMes DESC, Usuario
 $$
 LANGUAGE SQL
 STABLE
