@@ -1,0 +1,19 @@
+{
+    "displayName": "Produção - Novos registos bibliográficos",
+    "description": "Mostra os totais de novos registros bibliograficos criados por operador",
+    "instructions": "Introduzir as datas de inicio e fim ",
+    "parameters": [
+        {
+            "name": "start_date",
+            "displayName": "Data Inicio",
+            "type": "date",
+            "required": false
+        },
+        {
+            "name": "end_date",
+            "displayName": "Data fim",
+            "type": "date",
+            "required": false
+        }
+    ]
+}
