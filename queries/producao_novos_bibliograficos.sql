@@ -22,7 +22,7 @@ LEFT JOIN folio_users.users__ u
 GROUP BY
     AnoMes,
     Usuario
-where (i.jsonb->'metadata'->>'createdDate')::timestamp between start_date and end_date
+-- where (i.jsonb->'metadata'->>'createdDate')::timestamp between start_date and end_date
 ORDER BY AnoMes DESC, Usuario
 $$
 LANGUAGE SQL
