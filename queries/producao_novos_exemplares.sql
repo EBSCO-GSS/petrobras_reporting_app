@@ -1,14 +1,9 @@
-DROP FUNCTION IF EXISTS producao_novos_exemplares;
 
-CREATE FUNCTION producao_novos_exemplares(
-    start_date date DEFAULT '2000-01-01',
-    end_date date DEFAULT '2050-01-01'
+WITH parameters AS (
+    SELECT
+        NULL :: DATE AS start_date,
+        NULL :: DATE AS end_date
 )
-RETURNS TABLE(
-    Usuario text,
-    Ano_Mes text,
-    Total text)
-AS $$
 
 select 
     (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
@@ -25,9 +20,6 @@ GROUP BY
     Ano_Mes,
     Usuario
 ORDER BY Ano_Mes DESC, Usuario;
-$$
-LANGUAGE SQL
-STABLE
-PARALLEL SAFE;
+
 
 
