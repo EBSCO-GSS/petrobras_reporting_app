@@ -6,7 +6,7 @@ CREATE FUNCTION producao_novos_exemplares(
 )
 RETURNS TABLE(
     Usuario text,
-    AnoMes text,
+    Ano_Mes text,
     Total text)
 AS $$
 
@@ -15,18 +15,16 @@ select
     to_char(
 	    date_trunc('month', (i.jsonb->'metadata'->>'createdDate')::timestamp),
 	    'YYYY-MM'
-	) AS AnoMes,
-    (i.jsonb->'metadata'->>'createdByUserId') AS createdby,
+	) AS Ano_Mes,
     COUNT(*) AS Total
 FROM folio_inventory.item__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'createdByUserId')::uuid
-GROUP BY
-    AnoMes,
-    createdby,
-    Usuario
 where (i.jsonb->'metadata'->>'createdDate')::timestamp between start_date and end_date
-ORDER BY AnoMes DESC, Usuario;
+GROUP BY
+    Ano_Mes,
+    Usuario
+ORDER BY Ano_Mes DESC, Usuario;
 $$
 LANGUAGE SQL
 STABLE
