@@ -1,3 +1,5 @@
+--metadb:function producao_novos_exemplares
+
 DROP FUNCTION IF EXISTS producao_novos_exemplares;
 
 CREATE FUNCTION producao_novos_exemplares(
