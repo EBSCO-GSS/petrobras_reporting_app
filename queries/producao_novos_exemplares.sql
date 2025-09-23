@@ -8,8 +8,7 @@ RETURNS TABLE(
     Usuario text,
     Ano_Mes text,
     Total text)
-AS 
-$$
+AS $$
 select 
     (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
     to_char(
@@ -24,7 +23,7 @@ where (i.jsonb->'metadata'->>'createdDate')::timestamp between start_date and en
 GROUP BY
     Ano_Mes,
     Usuario
-ORDER BY Ano_Mes DESC, Usuario;
+ORDER BY Ano_Mes DESC, Usuario
 $$
 LANGUAGE SQL
 STABLE
