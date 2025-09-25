@@ -1,3 +1,4 @@
+--metadb:function producao_actualizacao_bibliograficos
 DROP FUNCTION IF EXISTS producao_actualizacao_bibliograficos;
 
 CREATE FUNCTION producao_actualizacao_bibliograficos(
@@ -20,14 +21,12 @@ SELECT
 FROM folio_inventory.instance__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'updatedByUserId')::uuid
+where (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end_date
 GROUP BY
     AnoMes,
     updatedby,
     Usuario
-where (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end_date
 ORDER BY AnoMes DESC, Usuario;
-
-
 $$
 LANGUAGE SQL
 STABLE

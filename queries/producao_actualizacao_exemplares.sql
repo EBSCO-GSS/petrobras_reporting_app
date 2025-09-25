@@ -1,3 +1,4 @@
+--metadb:function producao_actualizacao_exemplares
 DROP FUNCTION IF EXISTS producao_actualizacao_exemplares;
 
 CREATE FUNCTION producao_actualizacao_exemplares(
@@ -22,11 +23,11 @@ FROM folio_inventory.item__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'updatedByUserId')::uuid
 WHERE (i.jsonb->'metadata'->>'updatedDate') IS NOT NULL
+    and  (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end_date    
 GROUP BY
     AnoMes,
     updatedby,
     Usuario
-where (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end_date    
 ORDER BY AnoMes DESC, Usuario;
 
 
