@@ -16,7 +16,6 @@ SELECT
 	    date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::timestamp),
 	    'YYYY-MM'
 	) AS AnoMes,
-    (i.jsonb->'metadata'->>'updatedByUserId') AS updatedby,
     COUNT(*) AS Total
 FROM folio_inventory.instance__ i
 LEFT JOIN folio_users.users__ u
@@ -24,9 +23,8 @@ LEFT JOIN folio_users.users__ u
 where (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end_date
 GROUP BY
     AnoMes,
-    updatedby,
     Usuario
-ORDER BY AnoMes DESC, Usuario;
+ORDER BY AnoMes DESC, Usuario
 $$
 LANGUAGE SQL
 STABLE

@@ -10,14 +10,12 @@ RETURNS TABLE(
     AnoMes text,
     Total text)
 AS $$
-
 SELECT 
     (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
     to_char(
         date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::timestamp),
         'YYYY-MM'
     ) AS AnoMes,
-    i.jsonb->'metadata'->>'updatedByUserId' AS updatedby,
     COUNT(*) AS Total
 FROM folio_inventory.item__ i
 LEFT JOIN folio_users.users__ u
@@ -26,11 +24,8 @@ WHERE (i.jsonb->'metadata'->>'updatedDate') IS NOT NULL
     and  (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end_date    
 GROUP BY
     AnoMes,
-    updatedby,
     Usuario
-ORDER BY AnoMes DESC, Usuario;
-
-
+ORDER BY AnoMes DESC, Usuario
 $$
 LANGUAGE SQL
 STABLE
