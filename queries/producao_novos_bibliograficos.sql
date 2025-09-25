@@ -1,3 +1,5 @@
+--metadb:function producao_novos_bibliograficos
+
 DROP FUNCTION IF EXISTS producao_novos_bibliograficos;
 
 CREATE FUNCTION producao_novos_bibliograficos(
