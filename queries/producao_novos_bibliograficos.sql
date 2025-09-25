@@ -21,10 +21,10 @@ select
 FROM folio_inventory.instance__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'createdByUserId')::uuid
+where (i.jsonb->'metadata'->>'createdDate')::timestamp between start_date and end_date
 GROUP BY
     Ano_Mes,
     Usuario
-where (i.jsonb->'metadata'->>'createdDate')::timestamp between start_date and end_date
 ORDER BY Ano_Mes DESC, Usuario
 $$
 LANGUAGE SQL
