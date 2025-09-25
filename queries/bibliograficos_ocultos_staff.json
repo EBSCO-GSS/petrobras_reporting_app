@@ -1,0 +1,19 @@
+{
+    "displayName": "Produção - bibliográficos ocultos de staff",
+    "description": "Mostra os totais de registos ocultos de staff por operador",
+    "instructions": "Introduzir as datas de início e fim ",
+    "parameters": [
+        {
+            "name": "start_date",
+            "displayName": "Data Início",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "end_date",
+            "displayName": "Data fim",
+            "type": "date",
+            "required": true
+        }
+    ]
+}
