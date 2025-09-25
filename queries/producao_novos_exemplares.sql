@@ -9,7 +9,7 @@ CREATE FUNCTION producao_novos_exemplares(
 RETURNS TABLE(
     Usuario text,
     Ano_Mes text,
-    Total text)
+    Total number)
 AS $$
 select 
     (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
