@@ -26,7 +26,7 @@ and  (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end
 GROUP BY
     Ano_Mes,
     Usuario
-ORDER BY updated_month DESC, Usuario
+ORDER BY Ano_Mes DESC, Usuario
 $$
 LANGUAGE SQL
 STABLE
