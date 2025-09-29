@@ -19,18 +19,18 @@ RETURNS TABLE(
 AS $$
 
 SELECT distinct i.title, 
-    i2.barcode, 
-    i2.effective_shelving_order,
-    (u.jsonb->>'barcode') AS patron_barcode,
-    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS patron,
+    i2.barcode as item_barcode, 
+    i2.effective_shelving_order as item_effective_shelving_order,
+    (u.jsonb->>'barcode') AS usuario_barcode,
+    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS usuario_nome,
     (u.jsonb->'customFields'->>'link') as Departamento, 
     (u.jsonb->'customFields'->>'position') as Posicao,
-    sp.discovery_display_name  as checkout_sp,
-    l.item_id,
-    l.item_status ,
-    l.loan_date ,
-    l.due_date ,
-    mt.name as material_type
+    sp.discovery_display_name  as ponto_servico_checkout,
+    l.item_id as itemid,
+    l.item_status as item_estado,
+    l.loan_date as data_emprestimo ,
+    l.due_date as data_devolucao,
+    mt.name as tipo_material
     
 from  folio_circulation.loan__t__ l 
     LEFT JOIN folio_users.users__ u  ON u.id = l.user_id 
@@ -44,7 +44,7 @@ WHERE l.due_date > now()
 and l.item_status ='Checked out' 
 and l.action='checkedout' 
 
-ORDER BY l.loan_date  desc, patron
+ORDER BY data_emprestimo  desc, usuario_nome
 
 
 $$
