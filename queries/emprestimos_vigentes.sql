@@ -4,6 +4,7 @@ DROP FUNCTION IF EXISTS emprestimos_vigentes;
 
 CREATE FUNCTION emprestimos_vigentes()
 RETURNS TABLE(
+    title text,
     item_barcode text,
     item_effective_shelving_order text,
     usuario_barcode text,
@@ -17,8 +18,8 @@ RETURNS TABLE(
     data_devolucao text,
     tipo_material text)
 AS $$
-
-SELECT distinct i.title, 
+SELECT distinct 
+    i.title, 
     i2.barcode as item_barcode, 
     i2.effective_shelving_order as item_effective_shelving_order,
     (u.jsonb->>'barcode') AS usuario_barcode,
@@ -43,10 +44,7 @@ from  folio_circulation.loan__t__ l
 WHERE l.due_date > now() 
 and l.item_status ='Checked out' 
 and l.action='checkedout' 
-
 ORDER BY data_emprestimo  desc, usuario_nome
-
-
 $$
 LANGUAGE SQL
 STABLE
