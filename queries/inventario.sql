@@ -18,8 +18,7 @@ RETURNS TABLE(
     "Nota de inventário" text
     )
 AS $$
-SELECT distinct 
-    SELECT DISTINCT 
+SELECT DISTINCT 
     i.jsonb->>'barcode' AS barcode,
     i.jsonb->'status'->>'name' AS status,
     l.name AS localizacao, 
@@ -46,7 +45,7 @@ LEFT JOIN folio_inventory.item_note_type__t__ nt
 WHERE note->>'itemNoteTypeId' = '57a435dd-b89a-4cdd-ab80-c236dd28f979'
   AND i.__current 
   AND i2.__current
-  and note->>'note' like '%' + desc_nota_inventario + '%'
+  and note->>'note' LIKE '%' || desc_nota_inventario || '%'
 $$
 LANGUAGE SQL
 STABLE
