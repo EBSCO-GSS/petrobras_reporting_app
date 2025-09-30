@@ -1,0 +1,13 @@
+{
+    "displayName": "Inventário de exemplares",
+    "description": "Inventário de exemplares",
+    "instructions": "Introduzir o ano presente na descrição da nota de inventário (ex:2024)",
+    "parameters": [
+        {
+            "name": "desc_nota_inventario",
+            "displayName": "Descrição Nota Inventário",
+            "type": "text",
+            "required": false
+        }
+    ]
+}
