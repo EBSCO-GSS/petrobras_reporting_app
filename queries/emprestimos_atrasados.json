@@ -1,0 +1,20 @@
+{
+    "displayName": "Lista de empréstimos atrasados",
+    "description": "Mostra os Empréstimos atrasados",
+    "instructions": "Introduzir as datas de início e fim de devolução esperada",
+    "parameters": [
+        {
+            "name": "start_date",
+            "displayName": "Data Início",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "end_date",
+            "displayName": "Data fim",
+            "type": "date",
+            "required": true
+        }
+    
+    ]
+}
