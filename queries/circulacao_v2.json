@@ -14,24 +14,6 @@
             "displayName": "Data fim",
             "type": "date",
             "required": true
-        },
-        {
-            "name": "punidade_organizacional",
-            "displayName": "Unidade organizacional",
-            "type": "text",
-            "required": false
-        },
-        {
-            "name": "plotacao",
-            "displayName": "Lotação",
-            "type": "text",
-            "required": false
-        },
-        {
-            "name": "pposicao",
-            "displayName": "Posição",
-            "type": "text",
-            "required": false
         }
     ]
 }
