@@ -37,7 +37,7 @@ WHERE l.loan_date BETWEEN start_date AND end_date
   AND (u.jsonb->'customFields'->>'position') LIKE '%' || pposicao || '%'
   
 group by data_emprestimo, (u.jsonb->'customFields'->>'stocking')   
-ORDER BY data_emprestimo  desc, "	(u.jsonb->'customFields'->>'stocking')   "Lotação",
+ORDER BY data_emprestimo  desc, (u.jsonb->'customFields'->>'stocking') ,
 "
 
 $$
