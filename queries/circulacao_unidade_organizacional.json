@@ -1,6 +1,6 @@
 {
-    "displayName": "Circulação por ponto de serviço",
-    "description": "Circulação por ponto de serviço",
+    "displayName": "Circulação por unidade organizacional",
+    "description": "Circulação por unidade organizacional",
     "instructions": "Introduzir as datas de início e fim de empréstimo. ",
     "parameters": [
         {
