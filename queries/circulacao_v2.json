@@ -26,6 +26,12 @@
             "displayName": "Lotação",
             "type": "text",
             "required": false
+        },
+        {
+            "name": "pposicao",
+            "displayName": "Posição",
+            "type": "text",
+            "required": false
         }
     ]
 }

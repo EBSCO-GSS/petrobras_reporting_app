@@ -6,8 +6,8 @@ CREATE FUNCTION circulacao_v2(
     start_date date DEFAULT '2020-01-01',
     end_date date DEFAULT '2050-01-01',
     punidade_organizacional text DEFAULT '',
-    plotacao  text DEFAULT ''
-    --pposicao  text DEFAULT ''
+    plotacao  text DEFAULT '',
+    pposicao  text DEFAULT ''
 )
 RETURNS TABLE(
     data_emprestimo text,
@@ -51,7 +51,7 @@ WHERE i2.__current
   AND l.loan_date BETWEEN start_date AND end_date
   AND (u.jsonb->'customFields'->>'link')     LIKE '%' || punidade_organizacional || '%'
   AND (u.jsonb->'customFields'->>'stocking') LIKE '%' || plotacao || '%'
-  --AND (u.jsonb->'customFields'->>'position') LIKE '%' || pposicao || '%'
+  AND (u.jsonb->'customFields'->>'position') LIKE '%' || pposicao || '%'
 GROUP BY 
     data_emprestimo, 
     ponto_servico, 
