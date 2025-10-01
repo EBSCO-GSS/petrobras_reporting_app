@@ -14,6 +14,12 @@
             "displayName": "Data fim",
             "type": "date",
             "required": true
+        },
+        {
+            "name": "punidade_organizacional",
+            "displayName": "Unidade organizacional",
+            "type": "text",
+            "required": false
         }
     ]
 }
