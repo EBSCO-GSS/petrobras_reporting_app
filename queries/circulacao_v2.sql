@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS circulacao_v2;
 
 CREATE FUNCTION circulacao_v2(
     start_date date DEFAULT '2020-01-01',
-    end_date date DEFAULT '2050-01-01',
+    end_date date DEFAULT '2050-01-01'
     --punidade_organizacional text DEFAULT '',
     --plotacao  text DEFAULT '',
     --pposicao  text DEFAULT ''
