@@ -4,7 +4,7 @@ DROP FUNCTION IF EXISTS inventario;
 
 CREATE FUNCTION inventario(
     desc_nota_inventario text DEFAULT '2024',
-    tipo_material text DEFAULT 'monog',
+    ptipo_material text DEFAULT 'MONOG',
     plocalizacao text DEFAULT ''
 )
 RETURNS TABLE(
@@ -49,7 +49,7 @@ WHERE note->>'itemNoteTypeId' = '57a435dd-b89a-4cdd-ab80-c236dd28f979'
   AND i2.__current
   and note->>'note' LIKE '%' || desc_nota_inventario || '%'
   and localizacao LIKE '%' || plocalizacao || '%'
-  and material_type LIKE '%' || tipo_material || '%'
+  and material_type LIKE '%' || ptipo_material || '%'
 $$
 LANGUAGE SQL
 STABLE
