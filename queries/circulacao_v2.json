@@ -20,6 +20,12 @@
             "displayName": "Unidade organizacional",
             "type": "text",
             "required": false
+        },
+        {
+            "name": "plotacao",
+            "displayName": "Lotação",
+            "type": "text",
+            "required": false
         }
     ]
 }
