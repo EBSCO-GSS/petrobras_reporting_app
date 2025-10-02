@@ -20,8 +20,8 @@ SELECT distinct
         date_trunc('month', (l.loan_date)),
         'YYYY-MM'
     ) AS data_emprestimo,
-	(u.jsonb->'customFields'->>'stocking')   "Lotação",
-	count(*) "Total empréstimos"
+	(u.jsonb->'customFields'->>'stocking') as  "Lotação",
+	count(*) as "Total empréstimos"
 
 from  folio_circulation.loan__t__ l 
     LEFT JOIN folio_users.users__ u  ON u.id = l.user_id 
@@ -37,8 +37,7 @@ WHERE l.loan_date BETWEEN start_date AND end_date
   AND (u.jsonb->'customFields'->>'position') LIKE '%' || pposicao || '%'
   
 group by data_emprestimo, (u.jsonb->'customFields'->>'stocking')   
-ORDER BY data_emprestimo  desc, (u.jsonb->'customFields'->>'stocking') ,
-"
+ORDER BY data_emprestimo  desc, (u.jsonb->'customFields'->>'stocking') 
 
 $$
 LANGUAGE SQL
