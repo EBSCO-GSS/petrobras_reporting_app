@@ -1,0 +1,37 @@
+{
+    "displayName": "Circulação por grupo de usuário",
+    "description": "Circulação por grupo de usuário",
+    "instructions": "Introduzir as datas de início e fim de empréstimo. ",
+    "parameters": [
+        {
+            "name": "start_date",
+            "displayName": "Data Início",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "end_date",
+            "displayName": "Data fim",
+            "type": "date",
+            "required": true
+        },
+        {
+            "name": "punidade_organizacional",
+            "displayName": "Unidade organizacional",
+            "type": "text",
+            "required": false
+        },
+        {
+            "name": "plotacao",
+            "displayName": "Lotação",
+            "type": "text",
+            "required": false
+        },
+        {
+            "name": "pposicao",
+            "displayName": "Posição",
+            "type": "text",
+            "required": false
+        }
+    ]
+}
