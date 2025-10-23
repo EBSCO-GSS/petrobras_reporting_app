@@ -1,6 +1,6 @@
 {
-    "displayName": "Lista de empréstimos vencidos/terminados",
-    "description": "Mostra os Empréstimos vencidos/terminados",
+    "displayName": "Lista de empréstimos devolvidos",
+    "description": "Mostra os Empréstimos devolvidos",
     "instructions": "Introduzir as datas de início e fim de devolução efectiva",
     "parameters": [
         {
