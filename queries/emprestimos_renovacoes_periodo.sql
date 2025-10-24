@@ -11,7 +11,6 @@ RETURNS TABLE(
     "Tipologia" text,
     "Total" text)
 AS $$
-
 SELECT
     to_char(date_trunc('month', l.loan_date), 'YYYY-MM') AS data_emprestimo,
     CASE 
@@ -30,6 +29,7 @@ GROUP BY
         WHEN l.action IN ('renewed') THEN 'Renovação'
         WHEN l.action IN ('checkedout', 'checkedOutThroughOverride') THEN 'Empréstimo'
         ELSE l.action
+    END
 ORDER BY 
     data_emprestimo DESC, 
     "Tipologia" 
