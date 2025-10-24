@@ -1,8 +1,8 @@
 --metadb:function emprestimos_vencidos
 
-DROP FUNCTION IF EXISTS emprestimos_vencidos;
+DROP FUNCTION IF EXISTS emprestimos_renovacoes_periodo;
 
-CREATE FUNCTION emprestimos_vencidos(
+CREATE FUNCTION emprestimos_renovacoes_periodo(
     start_date date DEFAULT '2020-01-01',
     end_date date DEFAULT '2050-01-01'    
 )
@@ -33,7 +33,6 @@ GROUP BY
 ORDER BY 
     data_emprestimo DESC, 
     "Tipologia" 
-
 $$
 LANGUAGE SQL
 STABLE
