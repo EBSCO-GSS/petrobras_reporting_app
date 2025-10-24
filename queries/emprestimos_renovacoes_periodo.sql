@@ -9,22 +9,20 @@ CREATE FUNCTION emprestimos_renovacoes_periodo(
 RETURNS TABLE(
     "Data Empréstimo" text,
     "Tipologia" text,
-    "Total" text)
+    "Total" bigint
+)
 AS $$
 SELECT
-    to_char(date_trunc('month', l.loan_date), 'YYYY-MM') AS data_emprestimo,
+    to_char(date_trunc('month', l.loan_date), 'YYYY-MM') AS "Data Empréstimo",
     CASE 
         WHEN l.action IN ('renewed') THEN 'Renovação'
         WHEN l.action IN ('checkedout', 'checkedOutThroughOverride') THEN 'Empréstimo'
         ELSE l.action
     END AS "Tipologia",
     COUNT(*) AS "Total"
-
-from folio_circulation.loan__t__ l
-
-where l.action in ('renewed','checkedout','checkedOutThroughOverride')
-and  l.loan_date between start_date and end_date 
-
+FROM folio_circulation.loan__t__ l
+WHERE l.action IN ('renewed','checkedout','checkedOutThroughOverride')
+  AND l.loan_date BETWEEN start_date AND end_date
 GROUP BY 
     to_char(date_trunc('month', l.loan_date), 'YYYY-MM'),
     CASE 
@@ -33,8 +31,8 @@ GROUP BY
         ELSE l.action
     END
 ORDER BY 
-    data_emprestimo DESC, 
-    "Tipologia" 
+    "Data Empréstimo" DESC, 
+    "Tipologia";
 $$
 LANGUAGE SQL
 STABLE
