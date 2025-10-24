@@ -14,7 +14,11 @@ AS $$
 
 SELECT
     to_char(date_trunc('month', l.loan_date), 'YYYY-MM') AS data_emprestimo,
-    l.action as "Tipologia",
+    CASE 
+        WHEN l.action IN ('renewed') THEN 'Renovação'
+        WHEN l.action IN ('checkedout', 'checkedOutThroughOverride') THEN 'Empréstimo'
+        ELSE l.action
+    END AS "Tipologia",
     COUNT(*) AS "Total"
 
 from folio_circulation.loan__t__ l
@@ -22,7 +26,10 @@ where l.action in ('renewed','checkedout','checkedOutThroughOverride')
 and  l.loan_date between start_date and end_date    
 GROUP BY 
     to_char(date_trunc('month', l.loan_date), 'YYYY-MM'),
-    l.action
+    CASE 
+        WHEN l.action IN ('renewed') THEN 'Renovação'
+        WHEN l.action IN ('checkedout', 'checkedOutThroughOverride') THEN 'Empréstimo'
+        ELSE l.action
 ORDER BY 
     data_emprestimo DESC, 
     "Tipologia" 
