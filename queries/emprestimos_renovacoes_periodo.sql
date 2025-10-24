@@ -23,7 +23,7 @@ SELECT
 from folio_circulation.loan__t__ l
 
 where l.action in ('renewed','checkedout','checkedOutThroughOverride')
-and  l.loan_date between start_date and end_date    
+and  l.loan_date between start_date and end_date 
 
 GROUP BY 
     to_char(date_trunc('month', l.loan_date), 'YYYY-MM'),
@@ -35,6 +35,8 @@ GROUP BY
 ORDER BY 
     data_emprestimo DESC, 
     "Tipologia" 
+    ;
+
 $$
 LANGUAGE SQL
 STABLE
