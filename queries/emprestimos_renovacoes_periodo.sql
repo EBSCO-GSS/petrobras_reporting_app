@@ -1,4 +1,4 @@
---metadb:function emprestimos_vencidos
+--metadb:function emprestimos_renovacoes_periodo
 
 DROP FUNCTION IF EXISTS emprestimos_renovacoes_periodo;
 
@@ -35,8 +35,6 @@ GROUP BY
 ORDER BY 
     data_emprestimo DESC, 
     "Tipologia" 
-    ;
-
 $$
 LANGUAGE SQL
 STABLE
