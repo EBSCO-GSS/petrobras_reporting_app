@@ -10,7 +10,8 @@ RETURNS TABLE(
     total bigint)
 AS $$
 SELECT 
-    i.id, i.jsonb->>'title' AS title,
+    i.id, 
+    i.jsonb->>'title' AS title,
     mt.name AS material_type,
     COUNT(*) AS total
 FROM folio_inventory.item__t__ i2
@@ -39,7 +40,7 @@ GROUP BY
     i.jsonb->>'title',
     mt.name
 ORDER BY 
-    1, 2
+    2,3
 $$
 LANGUAGE SQL
 STABLE
