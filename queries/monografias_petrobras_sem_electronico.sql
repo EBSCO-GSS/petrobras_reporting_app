@@ -7,7 +7,7 @@ RETURNS TABLE(
     id text, 
     title text,
     material_type text,
-    total bigint)
+    total text)
 AS $$
 SELECT 
     i.id, 
