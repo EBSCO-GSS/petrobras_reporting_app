@@ -1,13 +1,14 @@
 --metadb:function monografias_petrobras_sem_electronico
 
-DROP FUNCTION IF EXISTS monografias_petrobras_sem_electronicov;
+DROP FUNCTION IF EXISTS monografias_petrobras_sem_electronico;
 
 CREATE FUNCTION monografias_petrobras_sem_electronico()
 RETURNS TABLE(
     id text, 
     title text,
     material_type text,
-    total text)
+    total bigint
+)
 AS $$
 SELECT 
     i.id, 
@@ -36,11 +37,12 @@ WHERE i.__current
        OR jsonb_array_length(i.jsonb->'electronicAccess') = 0
       )
 GROUP BY 
-	i.id,
+    i.id,
     i.jsonb->>'title',
     mt.name
 ORDER BY 
-    2,3
+    title,
+    material_type;
 $$
 LANGUAGE SQL
 STABLE
