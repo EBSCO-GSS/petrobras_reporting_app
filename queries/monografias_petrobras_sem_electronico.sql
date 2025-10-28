@@ -40,9 +40,7 @@ GROUP BY
     i.id,
     i.jsonb->>'title',
     mt.name
-ORDER BY 
-    title,
-    material_type;
+ORDER BY  2,3
 $$
 LANGUAGE SQL
 STABLE
