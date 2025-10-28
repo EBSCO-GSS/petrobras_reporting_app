@@ -22,7 +22,6 @@ LEFT JOIN folio_inventory.instance__ i
        ON i.id = ht.instance_id 
 LEFT JOIN folio_inventory.material_type__t__ mt 
        ON mt.id = i2.material_type_id
--- Expand contributors array
 LEFT JOIN LATERAL jsonb_array_elements(i.jsonb->'contributors') AS contrib ON TRUE
 LEFT JOIN folio_inventory.contributor_name_type__t__ ct 
        ON ct.id = (contrib->>'contributorNameTypeId')::uuid
@@ -31,7 +30,6 @@ WHERE i.__current
   AND mt.name IN ('LIVRO', 'BOOK', 'MONOG')
   AND ct.name ILIKE '%Corporate%'
   AND contrib->>'name' ILIKE '%Petrobras%'
-  -- exclude instances that have any electronicAccess elements
   AND (
        i.jsonb->'electronicAccess' IS NULL 
        OR jsonb_array_length(i.jsonb->'electronicAccess') = 0
