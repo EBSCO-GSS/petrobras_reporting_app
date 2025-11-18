@@ -8,7 +8,7 @@ CREATE FUNCTION producao_novos_exemplares(
 )
 RETURNS TABLE(
     Usuario text,
-    Ano_Mes text,
+    AnoMes text,
     Total text)
 AS $$
 select 
@@ -17,16 +17,16 @@ select
 	    date_trunc('month', i.creation_date ),
 	    'YYYY-MM'
 	) AS AnoMes,
-    COUNT(*) AS Total
+    COUNT(i.id) AS Total
 FROM folio_inventory.item__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = i.created_by 
 where i.creation_date  between start_date and end_date
 and i.__current and u.__current 
 GROUP BY
-    Ano_Mes,
+    AnoMes,
     Usuario
-ORDER BY Ano_Mes DESC, Usuario
+ORDER BY AnoMes DESC, Usuario
 $$
 LANGUAGE SQL
 STABLE
