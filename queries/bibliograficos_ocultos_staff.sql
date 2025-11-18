@@ -23,6 +23,7 @@ LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'updatedByUserId')::uuid
 WHERE (i.jsonb->>'staffSuppress')::boolean =true
 and  (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end_date
+and i.__current
 GROUP BY
     Ano_Mes,
     Usuario
