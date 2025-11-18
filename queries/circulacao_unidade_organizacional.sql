@@ -30,7 +30,7 @@ from  folio_circulation.loan__t__ l
     left join folio_inventory.instance__t__ i on i.id = ht.instance_id 
     left join folio_inventory.service_point__t__ sp on sp.id =l.checkout_service_point_id 
     left join folio_inventory.material_type__t__ mt on mt.id = i2.material_type_id
-
+    and i2.__current
 WHERE l.loan_date BETWEEN start_date AND end_date
   AND (u.jsonb->'customFields'->>'link')     LIKE '%' || punidade_organizacional || '%'
   AND (u.jsonb->'customFields'->>'stocking') LIKE '%' || plotacao || '%'

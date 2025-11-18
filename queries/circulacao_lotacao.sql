@@ -36,6 +36,7 @@ WHERE l.loan_date BETWEEN start_date AND end_date
   AND (u.jsonb->'customFields'->>'link')     LIKE '%' || punidade_organizacional || '%'
   AND (u.jsonb->'customFields'->>'stocking') LIKE '%' || plotacao || '%'
   AND (u.jsonb->'customFields'->>'position') LIKE '%' || pposicao || '%'
+  and i2.__current
 GROUP BY 
     to_char(date_trunc('month', l.loan_date), 'YYYY-MM'),
     u.jsonb->'customFields'->>'stocking'
