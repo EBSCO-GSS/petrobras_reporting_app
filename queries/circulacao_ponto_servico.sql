@@ -35,7 +35,7 @@ WHERE l.loan_date BETWEEN start_date AND end_date
   AND (u.jsonb->'customFields'->>'link')     LIKE '%' || punidade_organizacional || '%'
   AND (u.jsonb->'customFields'->>'stocking') LIKE '%' || plotacao || '%'
   AND (u.jsonb->'customFields'->>'position') LIKE '%' || pposicao || '%'
-  and i2.__current
+  and i2.__current and i.__current
 group by data_emprestimo, sp.discovery_display_name
 ORDER BY data_emprestimo  desc, sp.discovery_display_name
 
