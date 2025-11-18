@@ -17,7 +17,7 @@ SELECT
         date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::timestamp),
         'YYYY-MM'
     ) AS Ano_Mes,
-    COUNT(*) AS total
+    COUNT(distinct i.id) AS total
 FROM folio_inventory.instance__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'updatedByUserId')::uuid
