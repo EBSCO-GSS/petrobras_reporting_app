@@ -14,14 +14,15 @@ AS $$
 select 
     (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
     to_char(
-	    date_trunc('month', (i.jsonb->'metadata'->>'createdDate')::timestamp),
+	    date_trunc('month', i.creation_date ),
 	    'YYYY-MM'
-	) AS Ano_Mes,
+	) AS AnoMes,
     COUNT(*) AS Total
 FROM folio_inventory.item__ i
 LEFT JOIN folio_users.users__ u
-       ON u.id = (i.jsonb->'metadata'->>'createdByUserId')::uuid
-where (i.jsonb->'metadata'->>'createdDate')::timestamp between start_date and end_date
+       ON u.id = i.created_by 
+where i.creation_date  between start_date and end_date
+and i.__current and u.__current 
 GROUP BY
     Ano_Mes,
     Usuario
