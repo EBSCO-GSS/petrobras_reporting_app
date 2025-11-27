@@ -22,6 +22,7 @@ LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'updatedByUserId')::uuid
 WHERE (i.jsonb->'metadata'->>'updatedDate') IS NOT NULL
     and  (i.jsonb->'metadata'->>'updatedDate')::date between start_date and end_date    
+    and u.__current
 GROUP BY
     AnoMes,
     Usuario
