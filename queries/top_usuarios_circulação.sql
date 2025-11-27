@@ -16,7 +16,7 @@ SELECT
 FROM folio_circulation.loan__ l
 LEFT JOIN folio_users.users__ u
        ON u.id = (l.jsonb->>'userId')::uuid
-WHERE (l.jsonb->>'loanDate')::timestamp  BETWEEN start_date and end_date
+WHERE (l.jsonb->>'loanDate')::date  BETWEEN start_date and end_date
 GROUP BY Usuario
 ORDER BY Total DESC, Usuario;
 
