@@ -13,7 +13,7 @@ AS $$
 SELECT 
     (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
     to_char(
-        date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::timestamp),
+        date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::date),
         'YYYY-MM'
     ) AS AnoMes,
     COUNT(distinct i.id) AS Total
@@ -21,7 +21,7 @@ FROM folio_inventory.item__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'updatedByUserId')::uuid
 WHERE (i.jsonb->'metadata'->>'updatedDate') IS NOT NULL
-    and  (i.jsonb->'metadata'->>'updatedDate')::timestamp between start_date and end_date    
+    and  (i.jsonb->'metadata'->>'updatedDate')::date between start_date and end_date    
 GROUP BY
     AnoMes,
     Usuario
