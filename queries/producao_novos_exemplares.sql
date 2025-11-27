@@ -21,7 +21,7 @@ select
 FROM folio_inventory.item__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = i.created_by 
-where i.creation_date  between start_date and end_date
+where (i.jsonb->'metadata'->>'createdDate')::date between start_date and end_date
 and i.__current and u.__current 
 GROUP BY
     AnoMes,
