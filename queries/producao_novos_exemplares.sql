@@ -11,22 +11,33 @@ RETURNS TABLE(
     AnoMes text,
     Total text)
 AS $$
-select 
-    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
-    to_char(
-	    date_trunc('month', i.creation_date ),
-	    'YYYY-MM'
-	) AS AnoMes,
+SELECT 
+    COALESCE(
+        (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')),
+        'TOTAL'
+    ) AS Usuario,
+    COALESCE(
+        to_char(date_trunc('month', i.creation_date), 'YYYY-MM'),
+        'SUBTOTAL'
+    ) AS AnoMes,
     COUNT(i.id) AS Total
 FROM folio_inventory.item__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = i.created_by 
-where (i.jsonb->'metadata'->>'createdDate')::date between start_date and end_date
-and i.__current and u.__current 
-GROUP BY
-    AnoMes,
-    Usuario
-ORDER BY AnoMes DESC, Usuario
+WHERE (i.jsonb->'metadata'->>'createdDate')::date BETWEEN start_date AND end_date
+  AND i.__current 
+  AND u.__current 
+GROUP BY ROLLUP(
+    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')),
+    to_char(date_trunc('month', i.creation_date), 'YYYY-MM')
+)
+ORDER BY 
+    CASE WHEN (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) IS NULL THEN 2
+         WHEN to_char(date_trunc('month', i.creation_date), 'YYYY-MM') IS NULL THEN 1
+         ELSE 0 
+    END,
+    AnoMes DESC, 
+    Usuario;
 $$
 LANGUAGE SQL
 STABLE

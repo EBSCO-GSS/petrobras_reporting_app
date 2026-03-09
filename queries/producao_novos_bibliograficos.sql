@@ -11,23 +11,39 @@ RETURNS TABLE(
     Ano_Mes text,
     Total text)
 AS $$
-select 
-    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
-    to_char(
-	    date_trunc('month', (i.jsonb->'metadata'->>'createdDate')::date),
-	    'YYYY-MM'
-	) AS Ano_Mes,
+SELECT 
+    COALESCE(
+        (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')),
+        'TOTAL'
+    ) AS Usuario,
+    COALESCE(
+        to_char(
+            date_trunc('month', (i.jsonb->'metadata'->>'createdDate')::date),
+            'YYYY-MM'
+        ),
+        'SUBTOTAL'
+    ) AS Ano_Mes,
     COUNT(*) AS Total
 FROM folio_inventory.instance__ i
 LEFT JOIN folio_users.users__ u
        ON u.id = (i.jsonb->'metadata'->>'createdByUserId')::uuid
-where (i.jsonb->'metadata'->>'createdDate')::date between start_date and end_date
-and i.__current 
-and u.__current 
-GROUP BY
-    Ano_Mes,
-    Usuario
-ORDER BY Ano_Mes DESC, Usuario
+WHERE (i.jsonb->'metadata'->>'createdDate')::date BETWEEN start_date AND end_date
+  AND i.__current 
+  AND u.__current 
+GROUP BY ROLLUP(
+    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')),
+    to_char(
+        date_trunc('month', (i.jsonb->'metadata'->>'createdDate')::date),
+        'YYYY-MM'
+    )
+)
+ORDER BY 
+    CASE WHEN (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) IS NULL THEN 2
+         WHEN to_char(date_trunc('month', (i.jsonb->'metadata'->>'createdDate')::date), 'YYYY-MM') IS NULL THEN 1
+         ELSE 0 
+    END,
+    Ano_Mes DESC,
+    Usuario;
 $$
 LANGUAGE SQL
 STABLE
