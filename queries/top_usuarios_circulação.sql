@@ -11,14 +11,22 @@ RETURNS TABLE(
     Total text)
 AS $$
 SELECT 
-    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) AS Usuario,
+    COALESCE(
+        (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')),
+        'TOTAL'
+    ) AS Usuario,
     COUNT(l.id) AS Total
 FROM folio_circulation.loan__ l
 LEFT JOIN folio_users.users__ u
        ON u.id = (l.jsonb->>'userId')::uuid
-WHERE (l.jsonb->>'loanDate')::date  BETWEEN start_date and end_date
-GROUP BY Usuario
-ORDER BY Total DESC, Usuario;
+WHERE (l.jsonb->>'loanDate')::date BETWEEN start_date AND end_date
+GROUP BY ROLLUP(
+    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName'))
+)
+ORDER BY 
+    CASE WHEN (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) IS NULL THEN 1 ELSE 0 END,
+    Total DESC, 
+    Usuario;
 
 
 $$
