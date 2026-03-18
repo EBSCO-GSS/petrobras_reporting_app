@@ -22,7 +22,7 @@ SELECT
             date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::date),
             'YYYY-MM'
         )) = 1
-        THEN 'SUBTOTAL'
+        THEN ''
         ELSE to_char(
             date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::date),
             'YYYY-MM'
@@ -35,12 +35,15 @@ LEFT JOIN folio_users.users__ u
 WHERE (i.jsonb->>'discoverySuppress')::boolean = true
   AND (i.jsonb->'metadata'->>'updatedDate')::date BETWEEN start_date AND end_date
   AND i.__current
-GROUP BY ROLLUP (
-    (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')),
-    to_char(
-        date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::date),
-        'YYYY-MM'
-    )
+GROUP BY GROUPING SETS (
+    (
+        (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')),
+        to_char(
+            date_trunc('month', (i.jsonb->'metadata'->>'updatedDate')::date),
+            'YYYY-MM'
+        )
+    ),
+    ()
 )
 ORDER BY
     (u.jsonb->'personal'->>'firstName' || ' ' || (u.jsonb->'personal'->>'lastName')) NULLS LAST,
